@@ -11,4 +11,9 @@ export default makeStyles((theme) => ({
   actionDiv: {
     textAlign: "center",
   },
+  [theme.breakpoints.down("sm")]: {
+    mainContainer: {
+      flexDirection: "column",
+    },
+  },
 }));

@@ -5,13 +5,14 @@ import {
   deletePost,
   likePost,
 } from "../controllers/posts.js";
+import { auth } from "../middleware/auth.js";
 import express from "express";
 const postsRoute = express.Router();
 
 postsRoute.get("/", getPosts);
-postsRoute.post("/", createPost);
-postsRoute.patch("/:id", updatePost);
-postsRoute.delete("/:id", deletePost);
-postsRoute.patch("/:id/likePost", likePost);
+postsRoute.post("/", auth, createPost);
+postsRoute.patch("/:id", auth, updatePost);
+postsRoute.delete("/:id", auth, deletePost);
+postsRoute.patch("/:id/likePost", auth, likePost);
 
 export default postsRoute;

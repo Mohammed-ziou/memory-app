@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   media: {
     height: "10rem",
     // paddingTop: "",
@@ -22,6 +22,11 @@ export default makeStyles({
     height: "100%",
     position: "relative",
   },
+  // [theme.breakpoints.down("sm")]: {
+  //   card: {
+  //     width: "300px",
+  //   },
+  // },
   overlay: {
     position: "absolute",
     top: "20px",
@@ -53,4 +58,4 @@ export default makeStyles({
   message: {
     padding: "10px 5px",
   },
-});
+}));

@@ -3,7 +3,12 @@ import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../redux/action/posts";
 
 import useStyles from "./style";
-import { ThumbUpAlt, Delete, MoreHoriz } from "@material-ui/icons";
+import {
+  ThumbUpAlt,
+  Delete,
+  MoreHoriz,
+  ThumbUpAltOutlined,
+} from "@material-ui/icons";
 import {
   Card,
   CardActions,
@@ -15,8 +20,32 @@ import {
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const { media, card, overlay, overlay2, cardActions, details } = useStyles();
+
+  const Likes = () => {
+    if (post.likeCount.lenght > 0) {
+      return post.likeCount.find(
+        (like) => like === user?.result?.googleId || user?.result?._id
+      ) ? (
+        <ThumbUpAlt fontSize="small">
+          &nbsp;
+          {post.likeCount.lenght > 2
+            ? `You and ${post.likeCount.lenght - 1} others`
+            : `${post.likeCount.lenght} like${
+                post.likeCount.lenght > 1 ? "s" : ""
+              }`}
+        </ThumbUpAlt>
+      ) : (
+        <ThumbUpAltOutlined fontSize="small">
+          &nbsp;{post.likeCount.lenght}
+          {post.likeCount.lenght === 1 ? "Like" : "Likes"}
+        </ThumbUpAltOutlined>
+      );
+    }
+    return <ThumbUpAltOutlined fontSize="small">&nbsp;Like</ThumbUpAltOutlined>;
+  };
 
   return (
     <Card className={card}>
@@ -27,7 +56,7 @@ const Post = ({ post, setCurrentId }) => {
         title={post.title}
       />
       <div className={overlay}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
         </Typography>
@@ -58,11 +87,10 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="primary"
+          disabled={!user.result}
           onClick={() => dispatch(likePost(post._id))}
         >
-          <ThumbUpAlt fontSize="small" />
-          &nbsp; Like &nbsp;
-          {post.likeCount}
+          <Likes />
         </Button>
         <Button
           size="small"

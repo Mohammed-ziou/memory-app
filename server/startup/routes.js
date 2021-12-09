@@ -1,5 +1,5 @@
 import postsRoute from "../routes/posts.js";
-import express from "express";
+import userRoute from "../routes/users.js";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -9,4 +9,5 @@ export default function allRoutes(app) {
   app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
   app.use(cors());
   app.use("/posts", postsRoute);
+  app.use("/user", userRoute);
 }
